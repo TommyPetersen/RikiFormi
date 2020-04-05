@@ -1,0 +1,17 @@
+
+
+	Backlog
+	-------
+
+
+
+Draw only one of two overlapping edges [20200126].
+--------------------------------------------------
+If both edges of overlapping edges are drawn then:
+   o Extra time is used.
+   o If transparancy is used, then the transparancy on the overlap will be
+     different from other areas.
+   o The order of drawing the edges can affect the result.
+Remark 20200405: This is probably implemented by using the determinant.
+
+
