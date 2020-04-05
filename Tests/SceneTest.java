@@ -8,17 +8,17 @@ public class SceneTest{
 
     Camera cam;
 
-    ArrayList lines = new ArrayList();
+    ArrayList<Line3D> lines = new ArrayList<Line3D>();
     Line3D line = null;
 
     public SceneTest() throws Exception{
 	//makeTestLine();
 	//makeTestLineCut();
 	//makeTestStarBlink();
-	makeTestRectangles();
+	//makeTestRectangles();
 	//doTestPolygonLinesCut();
 	//doTestPolygonN();
-	//doTestTriangle();
+	doTestTriangle();
 	//doTestDegenerateTriangle();
     }
 

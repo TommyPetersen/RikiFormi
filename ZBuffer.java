@@ -63,15 +63,16 @@ public class ZBuffer extends Component{
     }
 
     public void update(ArrayList<ArrayList<RasterPoint>> listOfScannedRasterPoints){
-	Iterator I1, I2;
+	Iterator<ArrayList<RasterPoint>> I1;
+	Iterator<RasterPoint> I2;
 	ArrayList<RasterPoint> scannedRasterPoints;
 
 	I1 = listOfScannedRasterPoints.iterator();
 	while (I1.hasNext()){
-	    scannedRasterPoints = (ArrayList<RasterPoint>) I1.next();
+	    scannedRasterPoints = I1.next();
 	    I2 = scannedRasterPoints.iterator();
 	    while (I2.hasNext()){
-		update((RasterPoint) I2.next());
+		update(I2.next());
 	    }
 	}
     }
@@ -97,7 +98,7 @@ public class ZBuffer extends Component{
 							  int a1, int b1, double D1, Color C1, double Z1,
 							  boolean includeStartAndEndPixels){
 
-	ArrayList<ArrayList<RasterPoint>> scannedRasterPointsList = new ArrayList();
+	ArrayList<ArrayList<RasterPoint>> scannedRasterPointsList = new ArrayList<ArrayList<RasterPoint>>();
 	
     	if ((a0 == a1) && (b0 == b1)){
 	    if (includeStartAndEndPixels){

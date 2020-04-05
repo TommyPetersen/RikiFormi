@@ -44,6 +44,7 @@ public class SerializableTest{
 	System.out.printf("EqualityTest: [%s]\n", (triangle3dAfter.equals(triangle3dBefore)));
     }
 
+    @SuppressWarnings("unchecked") // Suppress warnings on cast from deserialization.
     public void testSerializableListOfTriangle3D() throws Exception{
 	// *** Object before ***
 	Triangle3D triangle3dBefore1 = new Triangle3D(

@@ -7,7 +7,7 @@ public class RasterPolygon{
     public ArrayList<RasterPoint> RasterPoints;
 
     public RasterPolygon(){
-	RasterPoints = new ArrayList();
+	RasterPoints = new ArrayList<RasterPoint>();
     }
 
     public void addPoint(RasterPoint rasterPoint){
@@ -15,17 +15,17 @@ public class RasterPolygon{
     }
 
     public ArrayList toRasterLineList(){
-	Iterator IL = RasterPoints.iterator();
+	Iterator<RasterPoint> IL = RasterPoints.iterator();
 	
-	ArrayList lines = new ArrayList();
+	ArrayList<RasterLine> lines = new ArrayList<RasterLine>();
 	
 	if (IL.hasNext()){
 	    RasterPoint p0, pi, pj;
 	    
-	    p0 = pi = (RasterPoint) IL.next();
+	    p0 = pi = IL.next();
 
 	    while (IL.hasNext()){
-		pj = (RasterPoint) IL.next();
+		pj = IL.next();
 
 		lines.add(new RasterLine(pi, pj));
 

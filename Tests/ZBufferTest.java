@@ -27,7 +27,7 @@ public class ZBufferTest extends ZBuffer{
 	rasterPoint1 = new RasterPoint(15, 40, 100.0, Color.blue);
 	rasterPoint2 = new RasterPoint(20, 10, 100.0, Color.blue);
 
-	rasterPoints = sortRasterPoints(rasterPoint0, rasterPoint1, rasterPoint2);
+	rasterPoints = sortRasterPointsBySecondCoordinate(rasterPoint0, rasterPoint1, rasterPoint2);
 
 	a0 = rasterPoints.getFirst().a;
 	a1 = rasterPoints.getSecond().a;
@@ -47,7 +47,7 @@ public class ZBufferTest extends ZBuffer{
 	rasterPoint1 = new RasterPoint(20, 10, 100.0, Color.blue);
 	rasterPoint2 = new RasterPoint(10, 20, 100.0, Color.blue);
 
-	rasterPoints = sortRasterPoints(rasterPoint0, rasterPoint1, rasterPoint2);
+	rasterPoints = sortRasterPointsBySecondCoordinate(rasterPoint0, rasterPoint1, rasterPoint2);
 
 	a0 = rasterPoints.getFirst().a;
 	a1 = rasterPoints.getSecond().a;
@@ -67,7 +67,7 @@ public class ZBufferTest extends ZBuffer{
 	rasterPoint1 = new RasterPoint(10, 20, 100.0, Color.blue);
 	rasterPoint2 = new RasterPoint(15, 40, 100.0, Color.blue);
 
-	rasterPoints = sortRasterPoints(rasterPoint0, rasterPoint1, rasterPoint2);
+	rasterPoints = sortRasterPointsBySecondCoordinate(rasterPoint0, rasterPoint1, rasterPoint2);
 
 	a0 = rasterPoints.getFirst().a;
 	a1 = rasterPoints.getSecond().a;

@@ -8,7 +8,7 @@ public class Scene{
     Camera cam;
     
     public Scene() throws Exception{
-	ArrayList lines;
+	ArrayList<Line3D> lines;
 
         cam = new Camera(5.0,
 			 150.0,
@@ -24,9 +24,9 @@ public class Scene{
 	cam.updateScene(lines);
     }
 
-    public ArrayList initSceneObject(String name) throws Exception{
+    public ArrayList<Line3D> initSceneObject(String name) throws Exception{
 
-	ArrayList lines = new ArrayList();
+	ArrayList<Line3D> lines = new ArrayList<Line3D>();
 	Line3D line = null;
 
 	switch (name){

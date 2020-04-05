@@ -122,6 +122,7 @@ public class Util3d{
  	return granularGeomObjects;
     }
 
+    @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
     private static <T> ArrayList<T> subdivideGeomObject(T geom, double epsilon)
 	throws Exception{
 	OrderedPair<T> tPair = new OrderedPair<T>();
@@ -223,7 +224,7 @@ public class Util3d{
     public static <T> ArrayList<T> transformGeoms(ArrayList<T> geoms, Matrix4x4 R) throws Exception{
 	T geom;
 	
-	ArrayList<T> transformedGeoms = new ArrayList();
+	ArrayList<T> transformedGeoms = new ArrayList<T>();
 
 	Iterator<T> geomsIterator = geoms.iterator();
 	
@@ -235,6 +236,7 @@ public class Util3d{
 	return transformedGeoms;
     }
     
+    @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
     public static <T> T transformGeom(T geom, Matrix4x4 R) throws Exception{
 	switch (geom.getClass().getName()){
 	case "RikiFormi.Point3D":
@@ -303,6 +305,7 @@ public class Util3d{
 	return clippedGeoms;
     }
     
+    @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
     public static <T> ArrayList<T> clipGeom(T geom, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	switch (geom.getClass().getName()){
 	case "RikiFormi.Point3D":
@@ -620,6 +623,7 @@ public class Util3d{
 	return projectedGeoms;
     }
 
+    @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
     public static <T> T projectGeom(T geom, double projectPlaneValue) throws Exception{
 	T projectedGeom;
 
