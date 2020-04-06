@@ -5,91 +5,42 @@ import java.util.*;
 import RikiFormi.Utils.*;
 
 public class Camera{
-
-    protected double FrontClipPlaneValue = 0.0;
     protected double ProjectionPlaneValue = 0.0;
     protected double ProjectionWindowWidth = 0.0;
     protected double ProjectionWindowHeight = 0.0;
-    protected Color BackgroundColor = Color.black;
-    protected double BackClipPlaneOffset = 2000.0;
-    protected double BackClipPlaneValue = ProjectionPlaneValue + BackClipPlaneOffset;
-    protected double LeftClipPlaneValue = 0.0;
-    protected double RightClipPlaneValue = 0.0;
-    protected double TopClipPlaneValue = 0.0;
-    protected double BottomClipPlaneValue = 0.0;
-    protected Line2D FrontClipPlaneBoundary = null;
-    protected Line2D BackClipPlaneBoundary = null;
-    protected Line2D LeftClipPlaneBoundary = null;
-    protected Line2D RightClipPlaneBoundary = null;
-    protected Line2D TopClipPlaneBoundary = null;
-    protected Line2D BottomClipPlaneBoundary = null;
-
+    protected CameraBoundingVolume cameraBoundingVolume = null;
     protected Matrix4x4 TransformationMatrix = null;
+    protected ZBuffer zBuffer;
+    protected Screen screen;
 
-    // Raster:
-    ZBuffer zBuffer;
-
-    // Display device:
-    Screen screen;
-
-    public Camera(double frontClipPlaneValue,
+    public Camera(double frontPlaneValue,
 		  double projectionPlaneValue,
 		  double projectionWindowWidth,
 		  double projectionWindowHeight,
 		  int w,
 		  int h) throws Exception{
 
-	FrontClipPlaneValue = frontClipPlaneValue;
-	if (FrontClipPlaneValue <= 0.0){
-	    throw new Exception("The value for FrontClipPlaneValue must be positive");
+	if (frontPlaneValue <= 0.0){
+	    throw new Exception("The value for frontPlaneValue must be positive");
 	}
+	
+	double backPlaneValue = projectionPlaneValue + 2000.0;
+	
+	cameraBoundingVolume = new CameraBoundingVolume(frontPlaneValue,
+							backPlaneValue,
+							projectionPlaneValue,
+							projectionWindowWidth,
+							projectionWindowHeight);
+
 	ProjectionPlaneValue = projectionPlaneValue;
 	ProjectionWindowWidth = projectionWindowWidth;
 	ProjectionWindowHeight = projectionWindowHeight;
+	
 	if (w <= 0 || h <= 0){
 	    throw new Exception("The values for W and H must be positive");
 	}
-	BackClipPlaneValue = ProjectionPlaneValue + BackClipPlaneOffset;
-
-	RightClipPlaneValue = Util3d.valueForLine2DCrossLine2D(new Line2D(new Point2D(0.0, 0.0),
-									  new Point2D(projectionWindowWidth / 2.0, projectionPlaneValue)),
-							       new Line2D(new Point2D(0.0, BackClipPlaneValue),
-									  new Point2D(1.0, BackClipPlaneValue)));
-	LeftClipPlaneValue = -RightClipPlaneValue;
-	double leftBackClipPlaneValue = LeftClipPlaneValue;
-	double rightBackClipPlaneValue = RightClipPlaneValue;
 	
-	TopClipPlaneValue = Util3d.valueForLine2DCrossLine2D(new Line2D(new Point2D(0.0, 0.0),
-									new Point2D(projectionWindowHeight / 2.0, projectionPlaneValue)),
-							     new Line2D(new Point2D(0.0, BackClipPlaneValue),
-									new Point2D(1.0, BackClipPlaneValue)));
-
-	BottomClipPlaneValue = -TopClipPlaneValue;
-	double topBackClipPlaneValue = TopClipPlaneValue;
-	double bottomBackClipPlaneValue = BottomClipPlaneValue;
-
-	FrontClipPlaneBoundary = new Line2D(new Point2D(0.0, FrontClipPlaneValue), new Point2D(1.0, FrontClipPlaneValue));
-	BackClipPlaneBoundary = new Line2D(new Point2D(0.0, BackClipPlaneValue), new Point2D(1.0, BackClipPlaneValue));
-	
-	double rightFrontClipPlaneValue = Util3d.valueForLine2DCrossLine2D(new Line2D(new Point2D(0.0, 0.0),
-										      new Point2D(projectionWindowWidth / 2.0, projectionPlaneValue)),
-									   new Line2D(new Point2D(0.0, FrontClipPlaneValue),
-										      new Point2D(1.0, FrontClipPlaneValue)));
-
-	double leftFrontClipPlaneValue = -rightFrontClipPlaneValue;
-	RightClipPlaneBoundary = new Line2D(new Point2D(rightFrontClipPlaneValue, FrontClipPlaneValue), new Point2D(rightBackClipPlaneValue, BackClipPlaneValue));
-	LeftClipPlaneBoundary = new Line2D(new Point2D(leftFrontClipPlaneValue, FrontClipPlaneValue), new Point2D(leftBackClipPlaneValue, BackClipPlaneValue));
-
-	double topFrontClipPlaneValue = Util3d.valueForLine2DCrossLine2D(new Line2D(new Point2D(0.0, 0.0),
-										    new Point2D(projectionWindowHeight / 2.0, projectionPlaneValue)),
-									 new Line2D(new Point2D(0.0, FrontClipPlaneValue),
-										    new Point2D(1.0, FrontClipPlaneValue)));
-
-	double bottomFrontClipPlaneValue = -topFrontClipPlaneValue;
-	TopClipPlaneBoundary = new Line2D(new Point2D(topFrontClipPlaneValue, FrontClipPlaneValue), new Point2D(topBackClipPlaneValue, BackClipPlaneValue));
-	BottomClipPlaneBoundary = new Line2D(new Point2D(bottomFrontClipPlaneValue, FrontClipPlaneValue), new Point2D(bottomBackClipPlaneValue, BackClipPlaneValue));
-
-	zBuffer = new ZBuffer(w, h, Double.MAX_VALUE, BackgroundColor, BackClipPlaneValue);
+	zBuffer = new ZBuffer(w, h, Double.MAX_VALUE, Color.black, backPlaneValue);
 	screen = new Screen(w, h);
 
 	transformationReset();
@@ -207,9 +158,10 @@ public class Camera{
 	double epsilon = 150.0;
 
 	transformedGeoms = Util3d.transformGeoms(geoms, TransformationMatrix);
-	clippedGeoms = Util3d.clipGeoms(transformedGeoms, FrontClipPlaneBoundary, BackClipPlaneBoundary,
-					LeftClipPlaneBoundary, RightClipPlaneBoundary,
-					TopClipPlaneBoundary, BottomClipPlaneBoundary);
+	clippedGeoms = Util3d.clipGeoms(transformedGeoms,
+					cameraBoundingVolume.getBoundary(BoundingPlaneName.FRONT), cameraBoundingVolume.getBoundary(BoundingPlaneName.BACK),
+					cameraBoundingVolume.getBoundary(BoundingPlaneName.LEFT), cameraBoundingVolume.getBoundary(BoundingPlaneName.RIGHT),
+					cameraBoundingVolume.getBoundary(BoundingPlaneName.TOP), cameraBoundingVolume.getBoundary(BoundingPlaneName.BOTTOM));
 	granularGeoms = Util3d.ensureGranularity(clippedGeoms, epsilon);
 	projectedGeoms = Util3d.projectGeoms(granularGeoms, ProjectionPlaneValue);
 	zBuffer.rasterizeGeoms(projectedGeoms, ProjectionWindowWidth, ProjectionWindowHeight);

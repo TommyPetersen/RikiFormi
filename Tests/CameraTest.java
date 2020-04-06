@@ -23,7 +23,7 @@ public class CameraTest extends Camera{
     private void test_valueForLine2DCrossLine2D(){
 	System.out.printf("*** Testing valueForLine2DCrossLine2D ***\n");
 	
-	FrontClipPlaneValue = 5.0; ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
+	ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
 	
 	Line2D constant1 = new Line2D(new Point2D(0.0, 1.0), new Point2D(1.0, 1.0));
 	double newX;
@@ -61,7 +61,7 @@ public class CameraTest extends Camera{
     private void test_clipLine() throws Exception{
 	System.out.printf("*** Testing clipLine ***\n");
 
-	FrontClipPlaneValue = 5.0; ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
+	ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
 
 	Line3D lineToClip;
 	Line3D clippedLine;
@@ -262,7 +262,7 @@ public class CameraTest extends Camera{
     private void test_transformGeom() throws Exception{
 	System.out.printf("*** Testing transformGeom ***\n");
 
-	FrontClipPlaneValue = 5.0; ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
+	ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
 
 	Line3D lineToTransform, transformedLine;
 
@@ -604,7 +604,7 @@ public class CameraTest extends Camera{
     private void test_projectLine() throws Exception{
 	System.out.printf("*** Testing projectLine ***\n");
 
-	FrontClipPlaneValue = 5.0; ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
+	ProjectionPlaneValue = 50.0; ProjectionWindowWidth = 600.0; ProjectionWindowHeight = 400.0;
 
 	Line3D rail1, rail2;
 	Line3D projectedRail1, projectedRail2;
