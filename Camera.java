@@ -158,10 +158,7 @@ public class Camera{
 	double epsilon = 150.0;
 
 	transformedGeoms = Util3d.transformGeoms(geoms, TransformationMatrix);
-	clippedGeoms = Util3d.clipGeoms(transformedGeoms,
-					cameraBoundingVolume.getBoundary(BoundingPlaneName.FRONT), cameraBoundingVolume.getBoundary(BoundingPlaneName.BACK),
-					cameraBoundingVolume.getBoundary(BoundingPlaneName.LEFT), cameraBoundingVolume.getBoundary(BoundingPlaneName.RIGHT),
-					cameraBoundingVolume.getBoundary(BoundingPlaneName.TOP), cameraBoundingVolume.getBoundary(BoundingPlaneName.BOTTOM));
+	clippedGeoms = Util3d.clipGeoms(transformedGeoms, cameraBoundingVolume);
 	granularGeoms = Util3d.ensureGranularity(clippedGeoms, epsilon);
 	projectedGeoms = Util3d.projectGeoms(granularGeoms, ProjectionPlaneValue);
 	zBuffer.rasterizeGeoms(projectedGeoms, ProjectionWindowWidth, ProjectionWindowHeight);

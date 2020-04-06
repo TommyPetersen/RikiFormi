@@ -276,23 +276,20 @@ public class Util3d{
     }
 
     // *** Clipping ***
-    public static <T> ArrayList<T> clipGeoms(ArrayList<T> geoms, Line2D frontClipPlaneBoundary, Line2D backClipPlaneBoundary,
-					     Line2D leftClipPlaneBoundary, Line2D rightClipPlaneBoundary,
-					     Line2D topClipPlaneBoundary, Line2D bottomClipPlaneBoundary) throws Exception{
-
+    public static <T> ArrayList<T> clipGeoms(ArrayList<T> geoms, CameraBoundingVolume cameraBoundingVolume) throws Exception {
 	ArrayList<T> frontClippedGeoms, backClippedGeoms, leftClippedGeoms, rightClippedGeoms, topClippedGeoms, bottomClippedGeoms;
 
-	frontClippedGeoms = clipGeoms(geoms, ClipPlaneName.FRONT, frontClipPlaneBoundary); if (frontClippedGeoms == null){return null;}
-	backClippedGeoms = clipGeoms(frontClippedGeoms, ClipPlaneName.BACK, backClipPlaneBoundary); if (backClippedGeoms == null){return null;}
-	leftClippedGeoms = clipGeoms(backClippedGeoms, ClipPlaneName.LEFT, leftClipPlaneBoundary); if (leftClippedGeoms == null){return null;}
-	rightClippedGeoms = clipGeoms(leftClippedGeoms, ClipPlaneName.RIGHT, rightClipPlaneBoundary);	if (rightClippedGeoms == null){return null;}
-	topClippedGeoms = clipGeoms(rightClippedGeoms, ClipPlaneName.TOP, topClipPlaneBoundary); if (topClippedGeoms == null){return null;}
-	bottomClippedGeoms = clipGeoms(topClippedGeoms, ClipPlaneName.BOTTOM, bottomClipPlaneBoundary);
+	frontClippedGeoms = clipGeoms(geoms, BoundingPlaneName.FRONT, cameraBoundingVolume.getBoundary(BoundingPlaneName.FRONT)); if (frontClippedGeoms == null){return null;}
+	backClippedGeoms = clipGeoms(frontClippedGeoms, BoundingPlaneName.BACK, cameraBoundingVolume.getBoundary(BoundingPlaneName.BACK)); if (backClippedGeoms == null){return null;}
+	leftClippedGeoms = clipGeoms(backClippedGeoms, BoundingPlaneName.LEFT, cameraBoundingVolume.getBoundary(BoundingPlaneName.LEFT)); if (leftClippedGeoms == null){return null;}
+	rightClippedGeoms = clipGeoms(leftClippedGeoms, BoundingPlaneName.RIGHT, cameraBoundingVolume.getBoundary(BoundingPlaneName.RIGHT)); if (rightClippedGeoms == null){return null;}
+	topClippedGeoms = clipGeoms(rightClippedGeoms, BoundingPlaneName.TOP, cameraBoundingVolume.getBoundary(BoundingPlaneName.TOP)); if (topClippedGeoms == null){return null;}
+	bottomClippedGeoms = clipGeoms(topClippedGeoms, BoundingPlaneName.BOTTOM, cameraBoundingVolume.getBoundary(BoundingPlaneName.BOTTOM));
 
 	return bottomClippedGeoms;
     }
 
-    public static <T> ArrayList<T> clipGeoms(ArrayList<T> geoms, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
+    public static <T> ArrayList<T> clipGeoms(ArrayList<T> geoms, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	T geom;
 	ArrayList<T> clippedGeoms = new ArrayList<T>();
 	Iterator<T> geomsIterator = geoms.iterator();
@@ -306,7 +303,7 @@ public class Util3d{
     }
     
     @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
-    public static <T> ArrayList<T> clipGeom(T geom, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
+    public static <T> ArrayList<T> clipGeom(T geom, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	switch (geom.getClass().getName()){
 	case "RikiFormi.Point3D":
 	    ArrayList<Point3D> clippedPoints = new ArrayList<Point3D>();
@@ -330,7 +327,7 @@ public class Util3d{
 	}
     }
 
-    public static Point3D clipPoint(Point3D point, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
+    public static Point3D clipPoint(Point3D point, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	if (geomIsCompletelyIncludedByClipPlane(point, clipPlaneName, clipPlaneBoundary)){
 	    return point;
 	} else {
@@ -338,7 +335,7 @@ public class Util3d{
 	}
     }
 
-    public static Line3D clipLine(Line3D line, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
+    public static Line3D clipLine(Line3D line, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	if (geomIsCompletelyExcludedByClipPlane(line, clipPlaneName, clipPlaneBoundary)){
 	    return null;
 	}
@@ -435,7 +432,7 @@ public class Util3d{
 	return new Line3D(newP0, newP1);
     }
 
-    public static Polygon3D clipPolygon(Polygon3D spacePolygon, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
+    public static Polygon3D clipPolygon(Polygon3D spacePolygon, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary) throws Exception{
 	ArrayList<Line3D> unclippedLines = spacePolygon.toLine3dList();
 	ArrayList<Line3D> clippedLines = new ArrayList<Line3D>();
 	Line3D unclippedLine, clippedLine;
@@ -472,19 +469,19 @@ public class Util3d{
 	}
     }
 
-    private static boolean geomIsCompletelyIncludedByClipPlane(Line3D line, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary)
+    private static boolean geomIsCompletelyIncludedByClipPlane(Line3D line, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary)
 	throws Exception{
 	return geomIsCompletelyIncludedByClipPlane(line.P0, clipPlaneName, clipPlaneBoundary) &&
 	    geomIsCompletelyIncludedByClipPlane(line.P1, clipPlaneName, clipPlaneBoundary);
     }
 
-    private static boolean geomIsCompletelyExcludedByClipPlane(Line3D line, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary)
+    private static boolean geomIsCompletelyExcludedByClipPlane(Line3D line, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary)
 	throws Exception{
 	return !geomIsCompletelyIncludedByClipPlane(line.P0, clipPlaneName, clipPlaneBoundary) &&
 	    !geomIsCompletelyIncludedByClipPlane(line.P1, clipPlaneName, clipPlaneBoundary);
     }
 
-    private static boolean geomIsCompletelyIncludedByClipPlane(Point3D point, ClipPlaneName clipPlaneName, Line2D clipPlaneBoundary)
+    private static boolean geomIsCompletelyIncludedByClipPlane(Point3D point, BoundingPlaneName clipPlaneName, Line2D clipPlaneBoundary)
 	throws Exception{
 
 	OrderedPair<Point2D> sortedPointsLine = sortPoints(new OrderedPair<Point2D>(clipPlaneBoundary.P0, clipPlaneBoundary.P1));

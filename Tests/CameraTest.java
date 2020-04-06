@@ -74,7 +74,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(15.0, 5.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant2);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant2);
 	
 	System.out.printf("Test1a: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -91,7 +91,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant2);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant2);
 	
 	System.out.printf("Test1b: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -108,7 +108,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(15.0, 5.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test2a: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -125,7 +125,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test2b: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -142,7 +142,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(15.0, 5.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant70);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant70);
 	
 	System.out.printf("Test3a: clippedLine is " + clippedLine + "\t\t\t\t\t\t\t[%s]\n",
 			  (clippedLine == null) ? "Passed" : "Failed");
@@ -151,7 +151,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant70);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant70);
 	
 	System.out.printf("Test3b: clippedLine is " + clippedLine + "\t\t\t\t\t\t\t[%s]\n",
 			  (clippedLine == null) ? "Passed" : "Failed");
@@ -160,7 +160,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(25.0, 5.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test4a: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -177,7 +177,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(25.0, 5.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test4b: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -194,7 +194,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(15.0, 15.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test5a: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -211,7 +211,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 15.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test5b: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -228,7 +228,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(15.0, 5.0, 15.0),
 			        new Point3D(25.0, 15.0, 5.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test6a: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
@@ -245,7 +245,7 @@ public class CameraTest extends Camera{
 	lineToClip = new Line3D(new Point3D(25.0, 15.0, 5.0),
 				new Point3D(15.0, 5.0, 15.0));
 
-	clippedLine = Util3d.clipLine(lineToClip, ClipPlaneName.FRONT, constant7);
+	clippedLine = Util3d.clipLine(lineToClip, BoundingPlaneName.FRONT, constant7);
 	
 	System.out.printf("Test6b: clippedLine is p0 = (%.2f, %.2f, %.2f)" +
 			  " and p1 = (%.2f, %.2f, %.2f)\t[%s]\n",
