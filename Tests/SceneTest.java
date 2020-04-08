@@ -17,8 +17,8 @@ public class SceneTest{
 	//makeTestStarBlink();
 	//makeTestRectangles();
 	//doTestPolygonLinesCut();
-	//doTestPolygonN();
-	doTestTriangle();
+	doTestPolygonN();
+	//doTestTriangle();
 	//doTestDegenerateTriangle();
     }
 

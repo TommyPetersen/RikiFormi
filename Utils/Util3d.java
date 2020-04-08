@@ -62,6 +62,22 @@ public class Util3d{
 						       anchorPoint));
     }
 
+    public static <T> ArrayList<T> ensureGranularity(ArrayList<T> geoms, double epsilon)
+	throws Exception{
+	ArrayList<T> granularGeomObjects = new ArrayList<T>();
+
+	T geom;
+	
+	Iterator<T> geomsIterator = geoms.iterator();
+	
+	while (geomsIterator.hasNext()){
+	    geom = geomsIterator.next();
+	    granularGeomObjects.addAll(ensureGranularity(geom, epsilon));
+	}
+
+ 	return granularGeomObjects;
+    }
+
     public static <T> ArrayList<T> ensureGranularity(T geom, double epsilon)
 	throws Exception{
 	ArrayList<T> coarseObjects = new ArrayList<T>();
@@ -104,22 +120,6 @@ public class Util3d{
 	}
 
 	return finalObjects;
-    }
-
-    public static <T> ArrayList<T> ensureGranularity(ArrayList<T> geoms, double epsilon)
-	throws Exception{
-	ArrayList<T> granularGeomObjects = new ArrayList<T>();
-
-	T geom;
-	
-	Iterator<T> geomsIterator = geoms.iterator();
-	
-	while (geomsIterator.hasNext()){
-	    geom = geomsIterator.next();
-	    granularGeomObjects.addAll(ensureGranularity(geom, epsilon));
-	}
-
- 	return granularGeomObjects;
     }
 
     @SuppressWarnings("unchecked") // Suppress warnings on cast from generic to specific type.
@@ -674,51 +674,6 @@ public class Util3d{
     }
 
     // *** Triangulation ***
-    public static ArrayList<Triangle3D> useFanTriangulation(Polygon3D polygon){
-	ArrayList<Triangle3D> triangles = new ArrayList<Triangle3D>();
-	
-	//DoToo: Find better name for the iterator:
-	Iterator<Point3D> pointIterator = polygon.iterator();
-
-	if (pointIterator.hasNext()){
-	    Point3D p0 = pointIterator.next();
-
-	    if (pointIterator.hasNext()){
-		Point3D pi = pointIterator.next();
-
-		if (pointIterator.hasNext()){
-		    Triangle3D triangle;
-		    Point3D pj;
-
-		    do {
-			pj = pointIterator.next();
-			
-			triangle = new Triangle3D(p0, pi, pj);
-			triangles.add(triangle);
-
-			pi = pj;
-		    } while (pointIterator.hasNext());
-		}
-	    }
-	}
-
-	return triangles;
-    }
-
-    public static ArrayList<Triangle3D> useRecursiveTriangulation(Polygon3D polygon)
-    throws Exception{
-	ArrayList<Point3D> polygonPoints = polygon.getCopyOfPoint3dList();
-	ArrayList<Triangle3D> initialTriangulation = doRecursiveTriangulation(polygonPoints);
-	ArrayList<Triangle3D> finalTriangulation = new ArrayList<Triangle3D>();
-	Iterator<Triangle3D> initialTriangleIterator = initialTriangulation.iterator();
-
-	while (initialTriangleIterator.hasNext()){
-	    finalTriangulation.addAll(ensureGranularity(initialTriangleIterator.next(), 70.0));
-	}
-
-	return finalTriangulation;
-    }
-    
     public static ArrayList<Triangle3D> doRecursiveTriangulation(Polygon3D polygon)
     throws Exception{
 	return doRecursiveTriangulation(polygon.getCopyOfPoint3dList());
