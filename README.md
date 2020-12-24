@@ -6,11 +6,15 @@ Clojure scripts to make 3D scenes.
 
 
 ## Compile
-javac RikiFormi/\*.java -cp "<RikiFormi_ParentDirectory>"; javac RikiFormi/Tests/\*.java -cp "<RikiFormi_ParentDirectory>"; javac RikiFormi/Utils/\*.java -cp "<RikiFormi_ParentDirectory>"
+Change directory to "<RikiFormi_ParentDirectory>".
+Enter the command
+  javac RikiFormi/\*.java -cp "<RikiFormi_ParentDirectory>"; javac RikiFormi/Tests/\*.java -cp "<RikiFormi_ParentDirectory>"; javac RikiFormi/Utils/\*.java -cp "<RikiFormi_ParentDirectory>"
 
 
 ## Run java tests
-java RikiFormi.Tests.SceneTest
+Change directory to "<RikiFormi_ParentDirectory>".
+Enter the command
+  java RikiFormi.Tests.SceneTest
 
 
 
